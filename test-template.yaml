@@ -47,12 +47,12 @@ spec:
             allowArbitraryValues: false
 
   steps:
-    - id: debug:log
+    - id: serviceArea
       name: serviceArea
       action: debug:log
       input:
         message: ${{ parameters.serviceArea }}
-    - id: debug:log
+    - id: endsystemname
       name: endsystemname
       action: debug:log
       input:
@@ -106,16 +106,16 @@ spec:
     #     path: 'charts'
     #     labelValue: '${{ parameters.servicename | lower}}'
 
-    - id: triggerPipeline
-      name: Update ArgoCd Application
-      action: gitlab:pipeline:trigger
-      input:
-        repoUrl: gitlab.apps.ktools.justica.local?owner=naspp/esb/devops&repo=backstage-setup
-        projectId: 12
-        tokenDescription: This is the text that will appear in the pipeline token
-        branch: main
-        variables:
-          serviceName: ${{ env.NODE_TLS_REJECT_UNAUTHORIZED }}
+    # - id: triggerPipeline
+    #   name: Update ArgoCd Application
+    #   action: gitlab:pipeline:trigger
+    #   input:
+    #     repoUrl: gitlab.apps.ktools.justica.local?owner=naspp/esb/devops&repo=backstage-setup
+    #     projectId: 12
+    #     tokenDescription: This is the text that will appear in the pipeline token
+    #     branch: main
+    #     variables:
+    #       serviceName: ${{ env.NODE_TLS_REJECT_UNAUTHORIZED }}
 
   output:
     links:
