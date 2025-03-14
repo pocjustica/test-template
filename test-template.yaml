@@ -48,10 +48,15 @@ spec:
 
   steps:
     - id: debug:log
-      name: debug:log
+      name: serviceArea
       action: debug:log
       input:
-        message: 
+        message: ${{ parameters.serviceArea }}
+    - id: debug:log
+      name: endsystemname
+      action: debug:log
+      input:
+        message: ${{ parameters.endsystemname }}
     # - id: sourceCodeTemplate
     #   name: Generating the Source Code Component
     #   action: fetch:template
