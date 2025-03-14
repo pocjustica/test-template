@@ -21,11 +21,6 @@ spec:
       required:
         - endsystemname
       properties:
-        repoOrgname:
-        servicename:
-          title: Nome do serviço
-          type: string
-          #pattern: '^[a-zA-Z]+$'
         serviceArea:
           title: Seleciona o Dominio (K8s namespace)
           type: string
