@@ -1,0 +1,125 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: test-async-api-database
+  title: Test Template async-api-database
+  description: |
+    Este template permite instanciar um repositorio para uma aplicação baseada em microserviços utilizando o framework Quarkus. Ele está organizado em três módulos principais: model, processor e producer.
+  annotations:
+    backstage.io/createdAt: "2025-02-07T13:30:00Z"
+    # usado pelo tech-docs para gerar a documentacao
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - java
+    - quarkus
+    - gradle
+    - argocd
+spec:
+  owner: esb-developers # alterar deacordo com o grupo
+  type: service # alterar se aplicavel
+
+  parameters:
+    - title: Providencia os detalhes do serviço
+      required:
+        - endsystemname
+      properties:
+        repoOrgname:
+        servicename:
+          title: Nome do serviço
+          type: string
+          #pattern: '^[a-zA-Z]+$'
+        serviceArea:
+          title: Seleciona o Dominio (K8s namespace)
+          type: string
+          description: Owner da componente
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: [Domain]
+              metadata.tags: esb
+            allowArbitraryValues: true
+        endsystemname:
+          title: Seleciona o Sistema (Area do Serviço)
+          type: string
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: [System]
+              metadata.tags: esb
+            allowArbitraryValues: false
+
+  steps:
+    - id: debug:log
+      name: debug:log
+      action: debug:log
+      input:
+        message: 
+    # - id: sourceCodeTemplate
+    #   name: Generating the Source Code Component
+    #   action: fetch:template
+    #   input:
+    #     url: ./skeleton
+    #     values:
+    #       componentName: ${{ parameters.servicename | lower}}
+    #       componentOwner: esb-developers  # alterar deacordo com o grupo
+    #       componentDescription: ${{ parameters.serviceDescription }}
+    #       componentSystem: ${{ parameters.endsystemname }}
+    #       servicename: ${{ parameters.servicename }}
+    #       servicenameLower: ${{ parameters.servicename | lower}}
+    #       serviceArea: ${{ parameters.serviceArea | replace('domain:default/', '') }}
+    #       securityGroup: ${{ parameters.securityGroup }}
+    #       endsystemname: ${{ parameters.endsystemname | replace('system:default/', '')}}
+
+    # - id: publish
+    #   name: Publishing to the Source Code Repository
+    #   action: publish:gitlab
+    #   input:
+    #     allowedHosts:
+    #       - gitlab.apps.ktools.justica.local
+    #     description: ${{ parameters.componentDescription }}
+    #     repoUrl: gitlab.apps.ktools.justica.local?owner=${{ parameters.repoOrgname }}&repo=${{ parameters.servicename | lower}}
+    #     defaultBranch: main
+    #     protectDefaultBranch: false
+    #     repoVisibility: public
+    #     gitCommitMessage: ${{ parameters.commitMessage }}
+    #     gitAuthorName: ${{ user.entity.metadata.name }}
+
+    # - id: register
+    #   name: Registering the Catalog Info Component
+    #   action: catalog:register
+    #   input:
+    #     repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+    #     catalogInfoPath: /catalog-info.yaml
+
+    # - id: create-argocd-resources
+    #   name: Create ArgoCD Resources
+    #   action: argocd:create-resources
+    #   input:
+    #     #projectName: default
+    #     appName: ${{ parameters.servicename | lower}}
+    #     argoInstance: kToolsInstance
+    #     namespace: ${{ parameters.serviceArea }}
+    #     repoUrl: https://gitlab.apps.ktools.justica.local/${{ parameters.repoOrgname }}/${{ parameters.servicename | lower}}.git
+    #     path: 'charts'
+    #     labelValue: '${{ parameters.servicename | lower}}'
+
+    - id: triggerPipeline
+      name: Update ArgoCd Application
+      action: gitlab:pipeline:trigger
+      input:
+        repoUrl: gitlab.apps.ktools.justica.local?owner=naspp/esb/devops&repo=backstage-setup
+        projectId: 12
+        tokenDescription: This is the text that will appear in the pipeline token
+        branch: main
+        variables:
+          serviceName: ${{ env.NODE_TLS_REJECT_UNAUTHORIZED }}
+
+  output:
+    links:
+      - title: Open the Source Code Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open the Catalog Info Component
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
+      - title: Open the ArgoCd Application
+        url: https://argocd-server-naspp-argocd-server.apps.ktools.justica.local/applications/naspp-argocd-server/${{ parameters.servicename | lower}}
