@@ -13,7 +13,7 @@ metadata:
     - gradle
     - argocd
 spec:
-  owner: esb-developers # alterar deacordo com o grupo
+  owner: cpires # alterar deacordo com o grupo
   type: service # alterar se aplicavel
 
   parameters:
