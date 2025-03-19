@@ -13,7 +13,7 @@ metadata:
     - gradle
     - argocd
 spec:
-  owner: cpires # alterar deacordo com o grupo
+  owner: esb-developers # alterar deacordo com o grupo
   type: service # alterar se aplicavel
 
   parameters:
@@ -47,6 +47,11 @@ spec:
       action: debug:log
       input:
         message: ${{ parameters.serviceArea }}
+    - id: replace
+      name: replace
+      action: debug:log
+      input:
+        message: gitlab.apps.ktools.justica.local?owner=naspp/esb/apps/${{ parameters.serviceDomain | replace('system:default/', '')}}&repo=${{ parameters.servicename | lower}}
     - id: endsystemname
       name: endsystemname
       action: debug:log
