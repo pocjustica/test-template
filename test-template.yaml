@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: test-template-1
-  title: IGNORAME - So para testar
+  title: IGNORAME - So para testar T1
   annotations:
     backstage.io/createdAt: "2025-02-07T13:30:00Z"
     # usado pelo tech-docs para gerar a documentacao
