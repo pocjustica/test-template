@@ -51,7 +51,7 @@ spec:
       name: replace
       action: debug:log
       input:
-        message: ${{ parameters.serviceDomain | replace('system:default/', '')}}&repo=${{ parameters.servicename | lower }}
+        message: "${{ parameters.serviceDomain | replace('system:default/', '')}}&repo=${{ parameters.servicename | lower }}"
     - id: endsystemname
       name: endsystemname
       action: debug:log
