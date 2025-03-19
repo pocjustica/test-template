@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: test-template
+  name: test-template-2
   title: IGNORAME - So para testar
   annotations:
     backstage.io/createdAt: "2025-02-07T13:30:00Z"
