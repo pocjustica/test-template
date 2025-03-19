@@ -21,7 +21,7 @@ spec:
       required:
         - endsystemname
       properties:
-        serviceArea:
+        serviceDomain:
           title: Seleciona o Dominio (K8s namespace)
           type: string
           description: Owner da componente
