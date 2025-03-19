@@ -38,7 +38,7 @@ spec:
           ui:options:
             catalogFilter:
               kind: [System]
-              metadata.tags: esb
+              metadata.tags: logs
             allowArbitraryValues: false
 
   steps:
