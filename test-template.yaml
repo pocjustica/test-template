@@ -51,7 +51,7 @@ spec:
       name: replace
       action: debug:log
       input:
-        message: megacenas2-${{ parameters.serviceDomain | replace('domain:default/', '')}}
+        message: megacenas3-${{ parameters.serviceDomain | replace('domain:default/', '')}}
     - id: endsystemname
       name: endsystemname
       action: debug:log
