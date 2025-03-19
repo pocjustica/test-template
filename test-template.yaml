@@ -51,7 +51,7 @@ spec:
       name: replace
       action: debug:log
       input:
-        message: gitlab.apps.ktools.justica.local?owner=naspp/esb/apps/${{ parameters.serviceDomain | replace('system:default\/', '')}}&repo=${{ parameters.servicename | lower}}
+        message: ${{ gitlab.apps.ktools.justica.local?owner=naspp/esb/apps/${{ parameters.serviceDomain }}&repo=${{ parameters.servicename | lower | replace('system:default\/', '')}}
     - id: endsystemname
       name: endsystemname
       action: debug:log
